@@ -3,6 +3,11 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 2rem;
 }
-h1 {
+h1,
+.countUp {
     font-family: 'Press Start 2P', cursive;
+}
+.countUp {
+    font-size: 1.4em;
+    text-align: center;
 }

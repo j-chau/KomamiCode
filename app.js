@@ -9,10 +9,10 @@ const komako = {};
 // o event listener on modal to continue
 // o display countdown timer (time = 3s):
 //     .setTimeout(t) => if t === 0, return; else time--;
-// o generating "cheat code":
+// x generating "cheat code":
 //     x const empty array for generated code
 //     x for each i in array of length 10, generate random integer between 0 and 7
-//     o display each integer as its corresponding index in button array
+//     x display each integer as its corresponding index in button array
 // o display countdown timer (time = 5s)
 // o hide cheat code
 // o event listener for keypresses:
@@ -47,7 +47,6 @@ komako.convertToArrows = (array) => {
     array.forEach(el => {
         let arrowSymb = komako.arrows[el];
         $("#matchCode").append(`<li>${arrowSymb}</li>`);
-        console.log(el);
     });
 }
 // wasd => number of available buttons
@@ -61,23 +60,34 @@ komako.generateCode = (size) => {
         komako.generate.push(komako.buttons[random]);
     }
     console.log(komako.generate.join(" "));
+    // convert WASD to arrows
     komako.convertToArrows(komako.generate);
-    // console.log(komako.convertToArrows(komako.generate));
 }
 
+komako.guessCode = [];
+komako.userEnterCode = (size) => {
+    $(document).on("keypress", (e) => {
+        if (komako.guessCode.length > size - 1) return;
+        else {
+            console.log(komako.guessCode.length);
+            komako.guessCode.push(e.which);
+        }
+        $("#counter").text(komako.guessCode.length);
+    });
+}
 
-komako.init = () => {
+komako.init = (codeLength) => {
     console.log("run ");
-    komako.generateCode(10);
-    // $(document).on("keypress", (e) => {
-    //     console.log(e.which);
-    //});
+    komako.generateCode(codeLength);
+    komako.userEnterCode(codeLength);
 }
 
 $(function () {
-    komako.init();
+    komako.init(10);
     // $("#again").on("submit", function (e) {
     //     e.preventDefault();
     //     console.log(komako.random(5));
     // });
+
+
 }); // end of document ready

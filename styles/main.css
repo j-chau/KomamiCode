@@ -197,8 +197,14 @@ body {
   font-size: 2rem;
 }
 
-h1 {
+h1,
+.countUp {
   font-family: 'Press Start 2P', cursive;
+}
+
+.countUp {
+  font-size: 1.4em;
+  text-align: center;
 }
 
 .code {
