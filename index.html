@@ -6,15 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Press+Start+2P&display=swap"
         rel="stylesheet">
+    <script src="https://kit.fontawesome.com/29cf3aee8c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/main.css">
 
-    <title>Konami's Code</title>
+    <title>Komami's Code</title>
 </head>
 
 <body>
     <header>
-        <h1>Konami's Code</h1>
+        <h1>Komami's Code</h1>
     </header>
+    <main>
+        <img src="assets/controller.svg" alt="old-school video game controller">
+        <div class="matchCode">
+            <p class="ABbutton">K</p>
+            <p id="matchCode">W A S D</p>
+        </div>
+        <div class="timer">
+            3
+        </div>
+        <form action="">
+            <input type="text">
+        </form>
+        <div class="counter">
+            10
+        </div>
+        <div class="score">
+            / 10
+        </div>
+        <form id="again" action="">
+            <button type="submit" id="">Play Again</button>
+        </form>
+    </main>
+
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'
+        integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>
+    <script src="./app.js"></script>
 </body>
 
 </html>
