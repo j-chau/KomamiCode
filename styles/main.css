@@ -188,23 +188,45 @@ body {
   margin: 0 auto;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: 'Noto Sans JP', sans-serif;
+  font-size: 2rem;
 }
 
 h1 {
   font-family: 'Press Start 2P', cursive;
 }
 
+.code {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 70%;
+  margin: 1em auto;
+}
+
+i {
+  font-size: 1.55em;
+  color: black;
+}
+
 .ABbutton {
   display: inline-block;
   position: relative;
+  margin-top: 5px;
+  padding: 0 0.5em;
 }
 
 .ABbutton::after {
   content: '';
   position: absolute;
-  border: 3px solid red;
+  border: 3px solid black;
   border-radius: 50%;
   width: 25px;
   height: 25px;

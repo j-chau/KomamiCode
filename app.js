@@ -35,16 +35,18 @@ komako.keyNumbers = {
     108: "L"
 }
 komako.arrows = {
-    W: `<i class="fas fa-arrow-alt-circle-up"></i>`,
-    A: `<i class="fas fa-arrow-alt-circle-left"></i>`,
-    S: `<i class="fas fa-arrow-alt-circle-down"></i>`,
-    D: `<i class="fas fa-arrow-alt-circle-right"></i>`,
+    W: `<i class="far fa-arrow-alt-circle-up"></i>`,
+    A: `<i class="far fa-arrow-alt-circle-left"></i>`,
+    S: `<i class="far fa-arrow-alt-circle-down"></i>`,
+    D: `<i class="far fa-arrow-alt-circle-right"></i>`,
     K: `<p class="ABbutton">K</p>`,
     L: `<p class="ABbutton">L</p>`,
 
 }
 komako.convertToArrows = (array) => {
     array.forEach(el => {
+        let arrowSymb = komako.arrows[el];
+        $("#matchCode").append(`<li>${arrowSymb}</li>`);
         console.log(el);
     });
 }
@@ -58,9 +60,9 @@ komako.generateCode = (size) => {
         let random = komako.random(komako.buttons.length);
         komako.generate.push(komako.buttons[random]);
     }
-    // $("#matchCode").text(komako.generate.join("  |  "));
-    console.log(komako.generate.join(" | "));
-    console.log(komako.convertToArrows(komako.generate));
+    console.log(komako.generate.join(" "));
+    komako.convertToArrows(komako.generate);
+    // console.log(komako.convertToArrows(komako.generate));
 }
 
 

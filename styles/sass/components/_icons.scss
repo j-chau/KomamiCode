@@ -1,10 +1,22 @@
+.code {
+    display: flex;
+    justify-content: space-around;
+    width: 70%;
+    margin: 1em auto;
+}
+i {
+    font-size: 1.55em;
+    color: $iconColor;
+}
 .ABbutton {
     display: inline-block;
     position: relative;
+    margin-top: 5px;
+    padding: 0 0.5em;
     &::after {
         content: '';
         position: absolute;
-        border: 3px solid red;
+        border: 3px solid $iconColor;
         border-radius: 50%;
         width: 25px;
         height: 25px;
