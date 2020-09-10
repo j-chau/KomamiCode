@@ -15,9 +15,9 @@ const komako = {};
 //     x display each integer as its corresponding index in button array
 // o display countdown timer (time = 5s)
 // o hide cheat code
-// o event listener for keypresses:
+// x event listener for keypresses:
 //     x const empty array for user's answers
-//     o for each keypress, convert e.which to letter on keyboard
+//     x for each keypress, convert e.which to letter on keyboard
 //     x push value to answer array
 //     x display number of keypresses (array indices + 1); ends at 10
 // o compare cheat code array at [i] to answer array at [i]:
@@ -81,9 +81,19 @@ komako.userEnterCode = (size) => {
     $(document).on("keypress", (e) => {
         if (komako.guessCode.length > size - 1) return;
         else {
-
-            komako.guessCode.push(e.which);
+            for (let i = 0; i < komako.buttons.length; i++) {
+                if (komako.buttons[i].keyNumbers === e.which) {
+                    komako.guessCode.push(komako.buttons[i].letter);
+                }
+            }
         }
+        $("#counter").text(komako.guessCode.length);
+    });
+}
+komako.mobile = function (size) {
+    $(".controllerButton").on("click", function () {
+        if (komako.guessCode.length > size - 1) return;
+        else komako.guessCode.push(this.id);
         $("#counter").text(komako.guessCode.length);
     });
 }
@@ -91,8 +101,18 @@ komako.userEnterCode = (size) => {
 komako.init = (codeLength) => {
     console.log("run ");
     komako.generateCode(codeLength);
-    komako.userEnterCode(codeLength);
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        komako.mobile(codeLength);
+        console.log("mobile view");
+    }
+    else {
+        komako.userEnterCode(codeLength);
+        console.log("desktop view");
+    }
 }
+
+// komako.generate => array of objects
+// komako.userEnterCode => array of letters (both mobile and desktop)
 
 $(function () {
     komako.init(10);
