@@ -64,6 +64,7 @@ komako.displayArrows = (array) => {
         $("#matchCode").append(`<li>${arrowSymb}</li>`);
     });
 }
+
 // wasd => number of available buttons
 komako.random = (wasd) => rng = Math.floor(Math.random() * wasd);
 
@@ -78,37 +79,59 @@ komako.generateCode = (size) => {
 
 komako.guessCode = [];
 komako.userEnterCode = (size) => {
-    $(document).on("keypress", (e) => {
-        if (komako.guessCode.length > size - 1) return;
-        else {
-            for (let i = 0; i < komako.buttons.length; i++) {
-                if (komako.buttons[i].keyNumbers === e.which) {
-                    komako.guessCode.push(komako.buttons[i].letter);
+    return new Promise((resolve, reject) => {
+        $(document).on("keypress", (e) => {
+            if (komako.guessCode.length < size) {
+                for (let i = 0; i < komako.buttons.length; i++) {
+                    if (komako.buttons[i].keyNumbers === e.which) {
+                        komako.guessCode.push(komako.buttons[i].letter);
+                    }
                 }
+                $("#counter").text(komako.guessCode.length);
             }
-        }
-        $("#counter").text(komako.guessCode.length);
-    });
+            if (komako.guessCode.length === size) {
+                resolve(komako.guessCode);
+                return;
+            }
+        }); // end of event listener
+    }); // end of promise
 }
-komako.mobile = function (size) {
-    $(".controllerButton").on("click", function () {
-        if (komako.guessCode.length > size - 1) return;
-        else komako.guessCode.push(this.id);
-        $("#counter").text(komako.guessCode.length);
-    });
+komako.mobile = (size) => {
+    return new Promise((resolve, reject) => {
+        $(".controllerButton").on("click", function () {
+            if (komako.guessCode.length < size) {
+                komako.guessCode.push(this.id);
+                $("#counter").text(komako.guessCode.length);
+            }
+            if (komako.guessCode.length === size) {
+                resolve(komako.guessCode);
+                return;
+            }
+        }); // end of event listener
+    }); // end of promise
+}
+
+komako.checkAnswer = async (size) => {
+    let result;
+    console.log("waiting");
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        result = await komako.mobile(size);
+
+        console.log("mobile view");
+    } else {
+        result = await komako.userEnterCode(size);
+
+        console.log("desktop view");
+    }
+
+    console.log("done");
+    console.log(result);
 }
 
 komako.init = (codeLength) => {
     console.log("run ");
     komako.generateCode(codeLength);
-    if (window.matchMedia('(max-width: 768px)').matches) {
-        komako.mobile(codeLength);
-        console.log("mobile view");
-    }
-    else {
-        komako.userEnterCode(codeLength);
-        console.log("desktop view");
-    }
+    komako.checkAnswer(codeLength, komako.generate);
 }
 
 // komako.generate => array of objects
