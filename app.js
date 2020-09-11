@@ -49,12 +49,12 @@ komako.buttons = [
     {
         letter: "K",
         keyNumbers: 107,
-        arrows: `<p class="ABbutton">K</p>`
+        arrows: `<span class="ABbutton">K</span>`
     },
     {
         letter: "L",
         keyNumbers: 108,
-        arrows: `<p class="ABbutton">L</p>`
+        arrows: `<span class="ABbutton">L</span>`
     }
 ];
 
@@ -85,7 +85,7 @@ komako.userEnterCode = (size) => {
         $(document).on("keypress", (e) => {
             if (komako.guessCode.length < size) {
                 for (let i = 0; i < komako.buttons.length; i++) {
-                    if (komako.buttons[i].keyNumbers === e.which) {
+                    if (e.which === komako.buttons[i].keyNumbers) {
                         komako.guessCode.push(komako.buttons[i].letter);
                         komako.showCount(komako.guessCode.length);
                         if (komako.guessCode.length === size) {
@@ -120,15 +120,29 @@ komako.checkAnswer = async (size) => {
 
         console.log("mobile view");
     } else {
-        console.log("desktop view");
-
         result = await komako.userEnterCode(size);
 
         console.log("desktop view");
     }
-
     console.log("done");
+
+    console.log(komako.generateCode);
     console.log(result);
+
+    const yourCode = $("#yourCode");
+    let rightWrong;
+    for (let i = 0; i < result.length; i++) {
+        for (let j = 0; j < komako.buttons.length; j++) {
+            if (result[i] === komako.buttons[j].letter) {
+                const arrow = komako.buttons[j].arrows;
+                yourCode.append(`<li>${arrow}</li>`);
+                break;
+            }
+        }
+        if (result[i] === komako.generateCode[i].letter) rightWrong = "right";
+        else rightWrong = "wrong";
+        $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
+    }
 }
 
 komako.init = (codeLength) => {

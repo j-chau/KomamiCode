@@ -217,16 +217,20 @@ h1,
   margin: 1em auto;
 }
 
-i {
+li {
   font-size: 1.55em;
   color: black;
+}
+
+i {
+  padding-top: 0.2em;
 }
 
 .ABbutton {
   display: inline-block;
   position: relative;
-  margin-top: 5px;
   padding: 0 0.5em;
+  font-size: 0.6em;
 }
 
 .ABbutton::after {
@@ -237,7 +241,23 @@ i {
   width: 25px;
   height: 25px;
   left: 50%;
-  top: 50%;
+  top: 55%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.wrong {
+  color: red;
+}
+
+.wrong .ABbutton::after {
+  border-color: red;
+}
+
+.right {
+  color: green;
+}
+
+.right .ABbutton::after {
+  border-color: green;
 }
