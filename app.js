@@ -20,8 +20,8 @@ const komako = {};
 //     x for each keypress, convert e.which to letter on keyboard
 //     x push value to answer array
 //     x display number of keypresses (array indices + 1); ends at 10
-// o compare cheat code array at [i] to answer array at [i]:
-//     o for each i in answer array, if !== to cheat code array; score -= 1; else score += 1;
+// x compare cheat code array at [i] to answer array at [i]:
+//     x for each i in answer array, if !== to cheat code array; score += 1;
 // o display score out of 10
 // o show button with event listener to play again (same trigger as modal button)
 
@@ -112,6 +112,7 @@ komako.mobile = (size) => {
     }); // end of promise
 }
 
+komako.score = 0;
 komako.checkAnswer = async (size) => {
     let result;
     console.log("waiting");
@@ -129,8 +130,8 @@ komako.checkAnswer = async (size) => {
     console.log(komako.generateCode);
     console.log(result);
 
-    const yourCode = $("#yourCode");
     let rightWrong;
+    const yourCode = $("#yourCode");
     for (let i = 0; i < result.length; i++) {
         for (let j = 0; j < komako.buttons.length; j++) {
             if (result[i] === komako.buttons[j].letter) {
@@ -139,14 +140,22 @@ komako.checkAnswer = async (size) => {
                 break;
             }
         }
-        if (result[i] === komako.generateCode[i].letter) rightWrong = "right";
-        else rightWrong = "wrong";
+        if (result[i] === komako.generateCode[i].letter) {
+            rightWrong = "right";
+            komako.score += 1;
+        } else rightWrong = "wrong";
         $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
     }
+    console.log(komako.score);
+    $("#counter").hide();
+    $("#total").text(`${komako.score}/10`).show();
+    $("#again").show();
 }
 
 komako.init = (codeLength) => {
     console.log("run ");
+    $("#total").hide();
+    $("#again").hide();
     komako.generate(codeLength);
     komako.checkAnswer(codeLength);
 }
