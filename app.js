@@ -80,7 +80,7 @@ komako.generate = (size) => {
 }
 
 komako.guessCode = [];
-komako.userEnterCode = (size) => {
+komako.desktopInput = (size) => {
     return new Promise((resolve, reject) => {
         $(document).on("keypress", (e) => {
             if (komako.guessCode.length < size) {
@@ -98,7 +98,7 @@ komako.userEnterCode = (size) => {
         }); // end of event listener
     }); // end of promise
 }
-komako.mobile = (size) => {
+komako.mobileInput = (size) => {
     return new Promise((resolve, reject) => {
         $(".controllerButton").on("click", function () {
             if (komako.guessCode.length < size) {
@@ -113,18 +113,9 @@ komako.mobile = (size) => {
 }
 
 komako.score = 0;
-komako.checkAnswer = async (size) => {
-    let result;
+komako.checkAnswer = (result) => {
+    // let result;
     console.log("waiting");
-    if (window.matchMedia('(max-width: 768px)').matches) {
-        result = await komako.mobile(size);
-
-        console.log("mobile view");
-    } else {
-        result = await komako.userEnterCode(size);
-
-        console.log("desktop view");
-    }
     console.log("done");
 
     console.log(komako.generateCode);
@@ -152,12 +143,30 @@ komako.checkAnswer = async (size) => {
     $("#again").show();
 }
 
+komako.userEnterCode = size => {
+    let waitFor;
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        waitFor = komako.mobileInput;
+
+        console.log("mobile view");
+    } else {
+        waitFor = komako.desktopInput;
+
+        console.log("desktop view");
+    }
+    $.when(waitFor(size))
+        .then((guessCode) => {
+            komako.checkAnswer(guessCode);
+        })
+}
+
 komako.init = (codeLength) => {
     console.log("run ");
     $("#total").hide();
     $("#again").hide();
     komako.generate(codeLength);
-    komako.checkAnswer(codeLength);
+    komako.userEnterCode(codeLength);
+    // komako.checkAnswer(codeLength);
 }
 
 // komako.generate => array of objects
