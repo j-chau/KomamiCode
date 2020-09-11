@@ -68,13 +68,15 @@ komako.displayArrows = (array) => {
 // wasd => number of available buttons
 komako.random = (wasd) => rng = Math.floor(Math.random() * wasd);
 
-komako.generate = []
-komako.generateCode = (size) => {
+komako.showCount = (count) => $("#counter").text(count);
+
+komako.generateCode = []
+komako.generate = (size) => {
     for (let i = 0; i < size; i++) {
         let random = komako.random(komako.buttons.length);
-        komako.generate.push(komako.buttons[random]);
+        komako.generateCode.push(komako.buttons[random]);
     }
-    komako.displayArrows(komako.generate);
+    komako.displayArrows(komako.generateCode);
 }
 
 komako.guessCode = [];
@@ -85,13 +87,13 @@ komako.userEnterCode = (size) => {
                 for (let i = 0; i < komako.buttons.length; i++) {
                     if (komako.buttons[i].keyNumbers === e.which) {
                         komako.guessCode.push(komako.buttons[i].letter);
+                        komako.showCount(komako.guessCode.length);
+                        if (komako.guessCode.length === size) {
+                            resolve(komako.guessCode);
+                        }
+                        break;
                     }
                 }
-                $("#counter").text(komako.guessCode.length);
-            }
-            if (komako.guessCode.length === size) {
-                resolve(komako.guessCode);
-                return;
             }
         }); // end of event listener
     }); // end of promise
@@ -101,11 +103,10 @@ komako.mobile = (size) => {
         $(".controllerButton").on("click", function () {
             if (komako.guessCode.length < size) {
                 komako.guessCode.push(this.id);
-                $("#counter").text(komako.guessCode.length);
-            }
-            if (komako.guessCode.length === size) {
-                resolve(komako.guessCode);
-                return;
+                komako.showCount(komako.guessCode.length);
+                if (komako.guessCode.length === size) {
+                    resolve(komako.guessCode);
+                }
             }
         }); // end of event listener
     }); // end of promise
@@ -119,6 +120,8 @@ komako.checkAnswer = async (size) => {
 
         console.log("mobile view");
     } else {
+        console.log("desktop view");
+
         result = await komako.userEnterCode(size);
 
         console.log("desktop view");
@@ -130,8 +133,8 @@ komako.checkAnswer = async (size) => {
 
 komako.init = (codeLength) => {
     console.log("run ");
-    komako.generateCode(codeLength);
-    komako.checkAnswer(codeLength, komako.generate);
+    komako.generate(codeLength);
+    komako.checkAnswer(codeLength);
 }
 
 // komako.generate => array of objects
