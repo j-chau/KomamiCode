@@ -4,17 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/29cf3aee8c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/main.css">
 
-    <title>Komami's Code</title>
+    <title>Komami Code</title>
 </head>
 
 <body>
+    <div class="modalOverlay"></div>
+    <div class="modal">
+        <div class="modalContent">
+            <h2>How to Play</h2>
+            <ol>
+                <li>5 seconds to remember the Komami Code</li>
+                <li>Using the <span id="userEnterMode">keyboard</span>, enter the code</li>
+                <li class="userEnterInstruct">
+                    <table>
+                        <tr>
+                            <td>up</td>
+                            <td>W</td>
+                        </tr>
+                        <tr>
+                            <td>down</td>
+                            <td>S</td>
+                        </tr>
+                        <tr>
+                            <td>left</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>right</td>
+                            <td>D</td>
+                        </tr>
+                        <tr>
+                            <td>"A" Button</td>
+                            <td>K</td>
+                        </tr>
+                        <tr>
+                            <td>"B" Button</td>
+                            <td>L</td>
+                        </tr>
+                    </table>
+                </li>
+            </ol>
+        </div>
+        <button type="submit" class="start" id="start">Start</button>
+        <!-- <a href="#" class="start linkButton">Start</a> -->
+    </div>
     <header>
-        <h1>Komami's Code</h1>
+        <h1>Komami Code</h1>
     </header>
     <main>
         <section class="">
@@ -35,11 +74,12 @@
                 <!-- userEnterCode goes here -->
             </ul>
         </section>
-        <form id="again">
-            <label for="restart">Try Again?</label>
-            <button type="reset" id="restart">Yes</button>
-            <button type="button" id="toPortfolio">No</button>
-        </form>
+        <section id="again" class="again">
+            <p>Try Again?</p>
+            <!-- <button type="reset" id="restart">Yes</button> -->
+            <a href="#" class="linkButton">Yes</a>
+            <a href="http://chaujoey.com" target="_blank" class="linkButton">No</a>
+        </section>
 
 
         <svg width="800" height="345" viewBox="0 0 800 345" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +94,7 @@
             <rect x="524" y="197" width="80" height="80" rx="5" fill="#EDEDED" />
 
             <!-- BUTTONS START -->
-            <path id="W" class="controllerButton" name="W"
+            <path id="W" class="controllerButton"
                 d="M109 130C109 127.239 111.239 125 114 125H154C156.761 125 159 127.239 159 130V172H109V130Z"
                 fill="black" />
             <path id="W" class="controllerButton"
@@ -95,6 +135,9 @@
                 d="M673.753 180.12C673.849 180.504 673.897 180.984 673.897 181.56C673.897 182.112 673.849 182.592 673.753 183H663.673C663.577 182.592 663.529 182.112 663.529 181.56C663.529 180.984 663.577 180.504 663.673 180.12C663.577 179.712 663.529 179.232 663.529 178.68C663.529 178.104 663.577 177.624 663.673 177.24C663.577 176.832 663.529 176.352 663.529 175.8C663.529 175.224 663.577 174.744 663.673 174.36C663.577 173.952 663.529 173.472 663.529 172.92C663.529 172.344 663.577 171.864 663.673 171.48C663.577 171.072 663.529 170.592 663.529 170.04C663.529 169.464 663.577 168.984 663.673 168.6C663.577 168.192 663.529 167.712 663.529 167.16C663.529 166.584 663.577 166.104 663.673 165.72C663.577 165.312 663.529 164.832 663.529 164.28C663.529 163.704 663.577 163.224 663.673 162.84H666.553C666.649 163.224 666.697 163.704 666.697 164.28C666.697 164.832 666.649 165.312 666.553 165.72C666.649 166.104 666.697 166.584 666.697 167.16C666.697 167.712 666.649 168.192 666.553 168.6C666.649 168.984 666.697 169.464 666.697 170.04C666.697 170.592 666.649 171.072 666.553 171.48C666.649 171.864 666.697 172.344 666.697 172.92C666.697 173.472 666.649 173.952 666.553 174.36C666.649 174.744 666.697 175.224 666.697 175.8C666.697 176.352 666.649 176.832 666.553 177.24C666.649 177.624 666.697 178.104 666.697 178.68C666.697 179.232 666.649 179.712 666.553 180.12H673.753Z"
                 fill="#EDEDED" />
         </svg>
+        <form>
+            <button type="submit" class=""> See Rules Again</button>
+        </form>
 
         <script src='https://code.jquery.com/jquery-3.2.1.min.js'
             integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>

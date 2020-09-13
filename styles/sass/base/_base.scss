@@ -6,7 +6,7 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
     box-sizing: border-box;
 }
 
-.sr-only:not(:focus):not(:active) {
+.srOnly:not(:focus):not(:active) {
     position: absolute; width: 1px; height: 1px;
     margin: -1px; border: 0; padding: 0;
     white-space: nowrap; overflow: hidden;

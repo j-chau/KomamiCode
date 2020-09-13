@@ -22,7 +22,7 @@ const komako = {};
 //     x display number of keypresses (array indices + 1); ends at 10
 // x compare cheat code array at [i] to answer array at [i]:
 //     x for each i in answer array, if !== to cheat code array; score += 1;
-// o display score out of 10
+// x display score out of 10
 // o show button with event listener to play again (same trigger as modal button)
 
 komako.buttons = [
@@ -164,7 +164,13 @@ komako.init = (codeLength) => {
     $("#total").hide();
     $("#again").hide();
     komako.generate(codeLength);
-    komako.userEnterCode(codeLength);
+    $("#start").on("click", e => {
+        console.log("ready");
+        e.preventDefault();
+        $(".modal").addClass("hide");
+        $(".modalOverlay").addClass("hide")
+        komako.userEnterCode(codeLength);
+    });
 
     // komako.guessCode = ["K", "D", "A", "W", "S", "D", "L", "L", "S", "L"];
     // komako.checkAnswer(komako.guessCode);

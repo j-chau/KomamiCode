@@ -1,18 +1,21 @@
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 2em;
-    align-items: center;
-}
-label {
-    grid-column: span 2;
-
+.again {
+    text-align: center;
+    line-height: 2em;
+    a{ 
+        display: inline-block;
+        width: 100px;
+    }
 }
 button {
-    // outline: 1px solid magenta;	
-    padding: 0.4em 0;
+    padding: 0.8em 0.4em;
+
+}
+.linkButton {
+    padding: 0.2em 0;
     position: relative;
 }
+.linkButton:hover::before,
+.linkButton:focus::before,
 button:hover::before,
 button:focus::before {
         font-family: "Font Awesome 5 Free"; 
@@ -23,4 +26,17 @@ button:focus::before {
         position: absolute;
         left: 0;
         top: 0;
+}
+.linkButton:hover::before,
+.linkButton:focus::before {
+    top: 6%;
+}
+.start:hover::before,
+.start:focus::before {
+    left: -20%;
+}
+button:hover::before,
+button:focus::before {
+    left: -7%;
+    top: 17%;
 }

@@ -169,7 +169,7 @@ button, html, input, select, textarea {
   box-sizing: border-box;
 }
 
-.sr-only:not(:focus):not(:active) {
+.srOnly:not(:focus):not(:active) {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -202,18 +202,15 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   font-size: 2rem;
   color: #f5fffa;
 }
 
-h1, form,
-.countUp {
+h1, h2, button,
+.countUp, .again {
   font-family: 'Press Start 2P', cursive;
   text-align: center;
-}
-
-h1, form, button {
   text-transform: uppercase;
   -webkit-transform: scaleX(80%);
           transform: scaleX(80%);
@@ -224,9 +221,73 @@ h1 {
   padding: 1em 0;
 }
 
-.countUp {
+h2 {
   font-size: 1.4em;
-  padding: 0.7em 0 0.5em;
+  padding-bottom: 0.8em;
+}
+
+.modalContent ol {
+  font-size: 1rem;
+}
+
+.countUp {
+  -webkit-transform: scaleX(100%);
+          transform: scaleX(100%);
+  font-size: 1.4em;
+  padding: 0.8em 0 0.5em;
+}
+
+table {
+  text-transform: capitalize;
+}
+
+.again {
+  text-align: center;
+  line-height: 2em;
+}
+
+.again a {
+  display: inline-block;
+  width: 100px;
+}
+
+button {
+  padding: 0.8em 0.4em;
+}
+
+.linkButton {
+  padding: 0.2em 0;
+  position: relative;
+}
+
+.linkButton:hover::before,
+.linkButton:focus::before,
+button:hover::before,
+button:focus::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.6em;
+  color: gold;
+  content: "\f0da";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.linkButton:hover::before,
+.linkButton:focus::before {
+  top: 6%;
+}
+
+.start:hover::before,
+.start:focus::before {
+  left: -20%;
+}
+
+button:hover::before,
+button:focus::before {
+  left: -7%;
+  top: 17%;
 }
 
 .code {
@@ -260,10 +321,10 @@ i {
   position: absolute;
   border: 3px solid #f5fffa;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  left: 50%;
-  top: 55%;
+  width: 35px;
+  height: 35px;
+  left: 47%;
+  top: 47%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
@@ -284,37 +345,64 @@ i {
   border-color: limegreen;
 }
 
-form {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-  -ms-grid-rows: 2em;
-      grid-template-rows: 2em;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-label {
-  grid-column: span 2;
-}
-
-button {
-  padding: 0.4em 0;
-  position: relative;
-}
-
-button:hover::before,
-button:focus::before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  font-size: 1.6em;
-  color: gold;
-  content: "\f0da";
-  position: absolute;
+.modalOverlay {
+  position: fixed;
+  width: 100%;
+  height: 90%;
+  bottom: 0;
   left: 0;
-  top: 0;
+  background-color: #111;
+  z-index: 5;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 650px;
+  max-width: 90%;
+  height: auto;
+  max-height: 90%;
+  padding: 2em 1em;
+  text-align: center;
+  background-color: #3D3D3D;
+  z-index: 10;
+}
+
+.modalContent {
+  height: 100%;
+  width: 100%;
+  padding: 0.5em;
+  overflow: auto;
+  text-align: left;
+}
+
+.modalContent ol {
+  padding: 2em 0;
+  line-height: 1.8;
+}
+
+.modalContent li {
+  padding-bottom: 1.8em;
+}
+
+table {
+  margin-top: 1em;
+  position: relative;
+  left: calc(50% - (2 * 2em));
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  text-align: right;
+}
+
+table td {
+  padding-left: 2em;
+}
+
+.hide {
+  display: none;
 }
 
 body {
@@ -338,7 +426,7 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 75vh;
+  height: 80vh;
 }
 
 svg, section {
