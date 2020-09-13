@@ -1,0 +1,16 @@
+body {
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+    background-color: $bgColor;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 75vh;
+}
+svg, section {
+    width: 100%;
+}

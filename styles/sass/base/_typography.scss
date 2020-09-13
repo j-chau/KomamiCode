@@ -2,12 +2,22 @@ html { font-size: 62.5%; }
 body {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 2rem;
+    color: $iconColor;
 }
-h1, button,
+h1, form,
 .countUp {
     font-family: 'Press Start 2P', cursive;
+    text-align: center;
+}
+h1, form, button {
+    text-transform: uppercase;
+    transform: scaleX(80%);
+}
+h1 {
+    font-size: 1.8em;
+    padding: 1em 0;
 }
 .countUp {
     font-size: 1.4em;
-    text-align: center;
+    padding: 0.7em 0 0.5em;
 }

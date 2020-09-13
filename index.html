@@ -17,6 +17,31 @@
         <h1>Komami's Code</h1>
     </header>
     <main>
+        <section class="">
+            <!-- <div class="timer">
+                3
+            </div> -->
+            <ul id="matchCode" class="code">
+                <!-- generateCode goes here -->
+            </ul>
+            <div id="counter" class="countUp">
+                0
+                <!-- counting number of inputs from userEnterCode -->
+            </div>
+            <div id="total" class="countUp">
+                <!-- score goes here -->
+            </div>
+            <ul id="yourCode" class="code">
+                <!-- userEnterCode goes here -->
+            </ul>
+        </section>
+        <form id="again">
+            <label for="restart">Try Again?</label>
+            <button type="reset" id="restart">Yes</button>
+            <button type="button" id="toPortfolio">No</button>
+        </form>
+
+
         <svg width="800" height="345" viewBox="0 0 800 345" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="800" height="345" rx="5" fill="#C4C4C4" />
             <rect x="15" y="48" width="770" height="265" rx="5" fill="#656565" />
@@ -71,32 +96,9 @@
                 fill="#EDEDED" />
         </svg>
 
-        <div class="timer">
-            3
-        </div>
-        <section class="">
-            <ul id="matchCode" class="code">
-                <!-- generateCode goes here -->
-            </ul>
-        </section>
-        <div id="counter" class="countUp">
-            0
-            <!-- counting number of inputs from userEnterCode -->
-        </div>
-        <div id="total" class="countUp">
-            <!-- score goes here -->
-        </div>
-        <form id="again" action="">
-            <button type="submit" id="">Play Again</button>
-        </form>
-        <ul id="yourCode" class="code">
-            <!-- userEnterCode goes here -->
-        </ul>
-    </main>
-
-    <script src='https://code.jquery.com/jquery-3.2.1.min.js'
-        integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>
-    <script src="./app.js"></script>
+        <script src='https://code.jquery.com/jquery-3.2.1.min.js'
+            integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>
+        <script src="./app.js"></script>
 </body>
 
 </html>

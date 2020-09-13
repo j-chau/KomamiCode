@@ -29,22 +29,22 @@ komako.buttons = [
     {
         letter: "W",
         keyNumbers: 119,
-        arrows: `<i class="far fa-arrow-alt-circle-up"></i>`
+        arrows: `<i class="fas fa-arrow-up"></i>`
     },
     {
         letter: "A",
         keyNumbers: 97,
-        arrows: `<i class="far fa-arrow-alt-circle-left"></i>`
+        arrows: `<i class="fas fa-arrow-left"></i>`
     },
     {
         letter: "S",
         keyNumbers: 115,
-        arrows: `<i class="far fa-arrow-alt-circle-down"></i>`
+        arrows: `<i class="fas fa-arrow-down"></i>`
     },
     {
         letter: "D",
         keyNumbers: 100,
-        arrows: `<i class="far fa-arrow-alt-circle-right"></i>`
+        arrows: `<i class="fas fa-arrow-right"></i>`
     },
     {
         letter: "K",
@@ -114,9 +114,6 @@ komako.mobileInput = (size) => {
 
 komako.score = 0;
 komako.checkAnswer = (result) => {
-    // let result;
-    console.log("waiting");
-    console.log("done");
 
     console.log(komako.generateCode);
     console.log(result);
@@ -154,8 +151,10 @@ komako.userEnterCode = size => {
 
         console.log("desktop view");
     }
+    console.log("waiting");
     $.when(waitFor(size))
         .then((guessCode) => {
+            console.log("done");
             komako.checkAnswer(guessCode);
         })
 }
@@ -166,7 +165,9 @@ komako.init = (codeLength) => {
     $("#again").hide();
     komako.generate(codeLength);
     komako.userEnterCode(codeLength);
-    // komako.checkAnswer(codeLength);
+
+    // komako.guessCode = ["K", "D", "A", "W", "S", "D", "L", "L", "S", "L"];
+    // komako.checkAnswer(komako.guessCode);
 }
 
 // komako.generate => array of objects

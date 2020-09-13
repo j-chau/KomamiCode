@@ -13,7 +13,15 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
 }
-body {
-    width: 90%;
-    margin: 0 auto;
+a {
+    color: inherit;
+    text-decoration: none;
+}
+button {
+    font-family: inherit;
+    background-color: inherit;
+    border: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
 }

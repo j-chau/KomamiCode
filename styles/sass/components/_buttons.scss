@@ -1,7 +1,26 @@
 form {
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2em;
+    align-items: center;
+}
+label {
+    grid-column: span 2;
+
 }
 button {
-    background-color: inherit;
-    border: none;
+    // outline: 1px solid magenta;	
+    padding: 0.4em 0;
+    position: relative;
+}
+button:hover::before,
+button:focus::before {
+        font-family: "Font Awesome 5 Free"; 
+        font-weight: 900; 
+        font-size: 1.6em;
+        color: gold;
+        content: "\f0da";        
+        position: absolute;
+        left: 0;
+        top: 0;
 }
