@@ -12,6 +12,10 @@
 </head>
 
 <body>
+    <!-- modal functional styling and accessibility considerations from:
+    https://css-tricks.com/considerations-styling-modal/, and https://codepen.io/noahblon/pen/yJpXka -->
+
+    <!-- HOW TO PLAY MODAL -->
     <div class="modalOverlay"></div>
     <div class="modal">
         <div class="modalContent">
@@ -52,6 +56,8 @@
         </div>
         <button type="button" class="start" id="start">Start</button>
     </div>
+    <!-- END OF HOW TO PLAY MODAL -->
+
     <div id="modalCounter" class="countUp readyModal">
         0
         <!-- countdown timer -->
@@ -61,9 +67,6 @@
     </header>
     <main>
         <section class="">
-            <!-- <div class="timer">
-                3
-            </div> -->
             <ul id="matchCode" class="code">
                 <!-- generateCode goes here -->
             </ul>
@@ -81,7 +84,8 @@
         </section>
         <section id="again" class="again">
             <p>Try Again?</p>
-            <a href="#" id="restart" class="linkButton">Yes</a>
+            <button type="button" id="playAgain">Yes</button>
+            <!-- <a href="" id="playAgain" class="linkButton">Yes</a> -->
             <a href="http://chaujoey.com" target="_blank" class="linkButton">No</a>
         </section>
 
@@ -145,7 +149,7 @@
                 fill="#EDEDED" />
         </svg>
         <form class="restart">
-            <button type="submit">See Rules Again</button>
+            <button type="submit" tabindex="-1" aria-hidden="true" id="refreshBtn">See Rules Again</button>
         </form>
 
         <script src='https://code.jquery.com/jquery-3.2.1.min.js'

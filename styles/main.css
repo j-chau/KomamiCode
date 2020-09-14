@@ -256,8 +256,18 @@ table {
   width: 100px;
 }
 
+.again button {
+  padding: 0.6em 1.6em;
+}
+
+.again button:hover::before, .again button:focus::before {
+  top: 10%;
+  left: 0%;
+}
+
 button {
   padding: 0.8em 0.4em;
+  position: relative;
 }
 
 .linkButton {

@@ -1,13 +1,13 @@
 const komako = {};
 
 // PSEUDO CODE
-// o global variables:
+// x global variables:
 //     x const button array = [W,A,S,D,P,L,B,N] for generating code
 //     x const conversion object to convert e.which to corresponding letter on keyboard
 //         - ex. object = { 87: "W" }
 // x modal appears first when document ready
 // x event listener on modal to continue
-// o display countdown timer (time = 3s):
+// - display countdown timer (time = 3s):
 //     .setTimeout(t) => if t === 0, return; else time--;
 // x generating "cheat code":
 //     x const empty array for generated code
@@ -23,7 +23,7 @@ const komako = {};
 // x compare cheat code array at [i] to answer array at [i]:
 //     x for each i in answer array, if !== to cheat code array; score += 1;
 // x display score out of 10
-// o show button with event listener to play again (same trigger as modal button)
+// x show button with event listener to play again (same trigger as modal button)
 
 komako.buttons = [
     {
@@ -59,7 +59,7 @@ komako.buttons = [
 ];
 
 komako.displayArrows = (array) => {
-    array.forEach(el => {
+    array.forEach((el) => {
         let arrowSymb = el.arrows;
         $("#matchCode").append(`<li>${arrowSymb}</li>`);
     });
@@ -89,7 +89,7 @@ komako.generate = (size) => {
     komako.displayArrows(komako.generateCode);
 
     const modalCounter = $("#modalCounter");
-    const time = 5
+    const time = 5;
     modalCounter.show();
     komako.countdown(time, "modalCounter");
     window.setTimeout(() => {
@@ -103,7 +103,7 @@ komako.generate = (size) => {
 
 komako.guessCode = [];
 komako.desktopInput = (size) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         $(document).on("keypress", (e) => {
             if (komako.guessCode.length < size) {
                 for (let i = 0; i < komako.buttons.length; i++) {
@@ -121,11 +121,11 @@ komako.desktopInput = (size) => {
     }); // end of promise
 }
 komako.mobileInput = (size) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         $(".controllerButton").on("click", function () {
             if (komako.guessCode.length < size) {
                 komako.guessCode.push(this.id);
-                komako.showCount(komako.guessCode.length);
+                komako.showCount(komako.guessCode.length, "counter");
                 if (komako.guessCode.length === size) {
                     resolve(komako.guessCode);
                 }
@@ -162,7 +162,7 @@ komako.checkAnswer = (result) => {
     $("#again").show();
 }
 
-komako.userEnterCode = size => {
+komako.userEnterCode = (size) => {
     let waitFor;
     if (window.matchMedia('(max-width: 768px)').matches) {
         waitFor = komako.mobileInput;
@@ -177,8 +177,21 @@ komako.userEnterCode = size => {
     $.when(waitFor(size))
         .then((guessCode) => {
             console.log("done");
+            $(document).off("keypress");
+            $(".controllerButton").off("click");
             komako.checkAnswer(guessCode);
         });
+}
+komako.restartGame = (size) => {
+    $("#playAgain").on("click", e => {
+        $("#matchCode").empty();
+        $("#yourCode").empty();
+        $("#total").hide();
+        $("#again").hide();
+        $("#counter").text(0);
+        komako.guessCode = [];
+        komako.generate(size);
+    })
 }
 
 komako.init = (codeLength) => {
@@ -194,13 +207,15 @@ komako.init = (codeLength) => {
         $("img").removeClass("hide");
         $(".controllerButton").removeClass("hide");
     }
-    $("#start").on("click", e => {
+    $("#start").on("click", (e) => {
         console.log("ready");
         e.preventDefault();
         $(".modal").hide();
         $(".modalOverlay").hide();
+        $("#refreshBtn").removeAttr("tabindex", "aria-hidden");
         komako.generate(codeLength);
     });
+    komako.restartGame(codeLength);
 
     // komako.guessCode = ["K", "D", "A", "W", "S", "D", "L", "L", "S", "L"];
     // komako.checkAnswer(komako.guessCode);

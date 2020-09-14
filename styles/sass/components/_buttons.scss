@@ -5,9 +5,18 @@
         display: inline-block;
         width: 100px;
     }
+    button {
+        padding: 0.6em 1.6em;
+        &:hover::before,
+        &:focus::before {
+            top: 10%;
+            left: 0%;
+        }
+    }
 }
 button {
     padding: 0.8em 0.4em;
+    position: relative;
 
 }
 .linkButton {
