@@ -9,8 +9,13 @@ main {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 80vh;
+    height: 40vh;
 }
 svg, section {
     width: 100%;
+}
+svg {
+    position: fixed;
+    bottom: 10%;
+    max-width: 96%;
 }

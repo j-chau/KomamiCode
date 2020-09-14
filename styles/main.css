@@ -237,6 +237,11 @@ h2 {
   padding: 0.8em 0 0.5em;
 }
 
+.countUp span {
+  font-size: 0.5em;
+  line-height: 4;
+}
+
 table {
   text-transform: capitalize;
 }
@@ -288,6 +293,11 @@ button:hover::before,
 button:focus::before {
   left: -7%;
   top: 17%;
+}
+
+.restart {
+  position: fixed;
+  bottom: 5%;
 }
 
 .code {
@@ -355,7 +365,8 @@ i {
   z-index: 5;
 }
 
-.modal {
+.modal,
+.readyModal {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -371,8 +382,14 @@ i {
   z-index: 10;
 }
 
-.modal img {
+.modal img,
+.readyModal img {
   width: 100%;
+}
+
+.readyModal {
+  top: 30%;
+  width: 300px;
 }
 
 .modalContent {
@@ -430,9 +447,15 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 80vh;
+  height: 40vh;
 }
 
 svg, section {
   width: 100%;
+}
+
+svg {
+  position: fixed;
+  bottom: 10%;
+  max-width: 96%;
 }

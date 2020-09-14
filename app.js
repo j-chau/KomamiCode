@@ -5,16 +5,16 @@ const komako = {};
 //     x const button array = [W,A,S,D,P,L,B,N] for generating code
 //     x const conversion object to convert e.which to corresponding letter on keyboard
 //         - ex. object = { 87: "W" }
-// o modal appears first when document ready
-// o event listener on modal to continue
+// x modal appears first when document ready
+// x event listener on modal to continue
 // o display countdown timer (time = 3s):
 //     .setTimeout(t) => if t === 0, return; else time--;
 // x generating "cheat code":
 //     x const empty array for generated code
 //     x for each i in array of length 10, generate random integer between 0 and 7
 //     x display each integer as its corresponding index in button array
-// o display countdown timer (time = 5s)
-// o hide cheat code
+// x display countdown timer (time = 5s)
+// x hide cheat code
 // x event listener for keypresses:
 //     x const empty array for user's answers
 //     x for each keypress, convert e.which to letter on keyboard
@@ -68,15 +68,37 @@ komako.displayArrows = (array) => {
 // wasd => number of available buttons
 komako.random = (wasd) => rng = Math.floor(Math.random() * wasd);
 
-komako.showCount = (count) => $("#counter").text(count);
+komako.showCount = (count, location) => $("#" + location).text(count);
 
-komako.generateCode = []
+komako.countdown = (time, location) => {
+    $("#" + location).text(time);
+    time--;
+    timer = window.setInterval(() => {
+        komako.showCount(time, location);
+        time--;
+        if (time < 0) clearInterval(timer);
+    }, 1000);
+}
+
 komako.generate = (size) => {
+    komako.generateCode = []
     for (let i = 0; i < size; i++) {
         let random = komako.random(komako.buttons.length);
         komako.generateCode.push(komako.buttons[random]);
     }
     komako.displayArrows(komako.generateCode);
+
+    const modalCounter = $("#modalCounter");
+    const time = 5
+    modalCounter.show();
+    komako.countdown(time, "modalCounter");
+    window.setTimeout(() => {
+        modalCounter.hide();
+        $("#matchCode").hide();
+        $("#counterText").show();
+        komako.userEnterCode(size);
+    }, time * 1000);
+
 }
 
 komako.guessCode = [];
@@ -87,7 +109,7 @@ komako.desktopInput = (size) => {
                 for (let i = 0; i < komako.buttons.length; i++) {
                     if (e.which === komako.buttons[i].keyNumbers) {
                         komako.guessCode.push(komako.buttons[i].letter);
-                        komako.showCount(komako.guessCode.length);
+                        komako.showCount(komako.guessCode.length, "counter");
                         if (komako.guessCode.length === size) {
                             resolve(komako.guessCode);
                         }
@@ -134,8 +156,8 @@ komako.checkAnswer = (result) => {
         } else rightWrong = "wrong";
         $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
     }
-    console.log(komako.score);
-    $("#counter").hide();
+    $("#matchCode").show();
+    $("#counterText ").hide();
     $("#total").text(`${komako.score}/10`).show();
     $("#again").show();
 }
@@ -163,6 +185,8 @@ komako.init = (codeLength) => {
     console.log("run ");
     $("#total").hide();
     $("#again").hide();
+    $("#counterText").hide();
+    $("#modalCounter").hide();
     if (window.matchMedia('(max-width: 768px)').matches) {
         $("#userEnterMode").text("controller");
         $("table").hide();
@@ -173,10 +197,9 @@ komako.init = (codeLength) => {
     $("#start").on("click", e => {
         console.log("ready");
         e.preventDefault();
-        $(".modal").addClass("hide");
-        $(".modalOverlay").addClass("hide")
+        $(".modal").hide();
+        $(".modalOverlay").hide();
         komako.generate(codeLength);
-        komako.userEnterCode(codeLength);
     });
 
     // komako.guessCode = ["K", "D", "A", "W", "S", "D", "L", "L", "S", "L"];

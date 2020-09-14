@@ -7,7 +7,8 @@
     background-color: $bgColor;
     z-index: 5;
 }
-.modal {
+.modal,
+.readyModal {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -23,6 +24,10 @@
     img {
         width: 100%;
     }
+}
+.readyModal {
+    top: 30%;
+    width: 300px;
 }
 .modalContent {
     height: 100%;
