@@ -156,19 +156,26 @@ komako.userEnterCode = size => {
         .then((guessCode) => {
             console.log("done");
             komako.checkAnswer(guessCode);
-        })
+        });
 }
 
 komako.init = (codeLength) => {
     console.log("run ");
     $("#total").hide();
     $("#again").hide();
-    komako.generate(codeLength);
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        $("#userEnterMode").text("controller");
+        $("table").hide();
+        $(".refLetter").hide();
+        $("img").removeClass("hide");
+        $(".controllerButton").removeClass("hide");
+    }
     $("#start").on("click", e => {
         console.log("ready");
         e.preventDefault();
         $(".modal").addClass("hide");
         $(".modalOverlay").addClass("hide")
+        komako.generate(codeLength);
         komako.userEnterCode(codeLength);
     });
 
@@ -176,15 +183,6 @@ komako.init = (codeLength) => {
     // komako.checkAnswer(komako.guessCode);
 }
 
-// komako.generate => array of objects
-// komako.userEnterCode => array of letters (both mobile and desktop)
-
 $(function () {
     komako.init(10);
-    // $("#again").on("submit", function (e) {
-    //     e.preventDefault();
-    //     console.log(komako.random(5));
-    // });
-
-
 }); // end of document ready
