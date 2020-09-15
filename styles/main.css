@@ -82,6 +82,24 @@
   }
 }
 
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
   margin: 0;
   padding: 0;
@@ -362,6 +380,7 @@ button {
   position: relative;
 }
 
+.start::before,
 .linkButton:hover::before,
 .linkButton:focus::before,
 button:hover::before,
@@ -381,15 +400,19 @@ button:focus::before {
   top: 6%;
 }
 
-.start:hover::before,
-.start:focus::before {
-  left: -20%;
-}
-
+.start::before,
 button:hover::before,
 button:focus::before {
   left: -7%;
   top: 17%;
+}
+
+.start::before,
+.start:hover::before,
+.start:focus::before {
+  left: -20%;
+  -webkit-animation: blink 1s step-end infinite;
+          animation: blink 1s step-end infinite;
 }
 
 .restart {

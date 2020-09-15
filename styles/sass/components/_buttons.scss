@@ -23,6 +23,7 @@ button {
     padding: 0.2em 0;
     position: relative;
 }
+.start::before,
 .linkButton:hover::before,
 .linkButton:focus::before,
 button:hover::before,
@@ -40,14 +41,17 @@ button:focus::before {
 .linkButton:focus::before {
     top: 6%;
 }
-.start:hover::before,
-.start:focus::before {
-    left: -20%;
-}
+.start::before,
 button:hover::before,
 button:focus::before {
     left: -7%;
     top: 17%;
+}
+.start::before,
+.start:hover::before,
+.start:focus::before {
+    left: -20%;
+    animation: blink 1s step-end infinite;
 }
 .restart {
     text-align: center;
