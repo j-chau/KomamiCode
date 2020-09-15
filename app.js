@@ -26,6 +26,13 @@ const komako = {};
 // x display score out of 10
 // x show button with event listener to play again (same trigger as modal button)
 
+const yourCode = $("#yourCode");
+const matchCode = $("#matchCode");
+const modalCounter = $("#modalCounter");
+const controllerBtn = $(".controllerButton");
+const counter = $("#counter");
+const counterText = $("#counterText");
+
 komako.buttons = [
     {
         letter: "W",
@@ -63,7 +70,7 @@ komako.konami = ["W", "W", "S", "S", "A", "D", "A", "D", "K", "L"];
 
 komako.random = (num) => rng = Math.floor(Math.random() * num);
 
-komako.showCount = (count, location) => $("#" + location).text(count);
+komako.showCount = (count, location) => location.text(count);
 
 komako.touchEnabled = () => {
     return ('ontouchstart' in window) ||
@@ -74,12 +81,12 @@ komako.touchEnabled = () => {
 komako.displayArrows = (array) => {
     array.forEach((el) => {
         let arrowSymb = el.arrows;
-        $("#matchCode").append(`<li>${arrowSymb}</li>`);
+        matchCode.append(`<li>${arrowSymb}</li>`);
     });
 }
 
 komako.countdown = (time, location) => {
-    $("#" + location).text(time);
+    location.text(time);
     time--;
     timer = window.setInterval(() => {
         komako.showCount(time, location);
@@ -96,17 +103,15 @@ komako.generate = (size, keysOrBtns) => {
     }
     komako.displayArrows(komako.generateCode);
 
-    const modalCounter = $("#modalCounter");
     const time = 5;
     modalCounter.show();
-    komako.countdown(time, "modalCounter");
+    komako.countdown(time, modalCounter);
     window.setTimeout(() => {
         modalCounter.hide();
-        $("#matchCode").hide();
-        $("#counterText").show();
+        matchCode.hide();
+        counterText.show();
         komako.userEnterCode(size, keysOrBtns);
     }, time * 1000);
-
 }
 
 komako.desktopInput = (size) => {
@@ -116,7 +121,7 @@ komako.desktopInput = (size) => {
                 for (let i = 0; i < komako.buttons.length; i++) {
                     if (e.which === komako.buttons[i].keyNumbers) {
                         komako.guessCode.push(komako.buttons[i].letter);
-                        komako.showCount(komako.guessCode.length, "counter");
+                        komako.showCount(komako.guessCode.length, counter);
                         if (komako.guessCode.length === size) {
                             resolve(komako.guessCode);
                         }
@@ -127,12 +132,13 @@ komako.desktopInput = (size) => {
         }); // end of event listener
     }); // end of promise
 }
+
 komako.mobileInput = (size) => {
     return new Promise((resolve) => {
-        $(".controllerButton").on("click", function () {
+        controllerBtn.on("click", function () {
             if (komako.guessCode.length < size) {
                 komako.guessCode.push(this.id);
-                komako.showCount(komako.guessCode.length, "counter");
+                komako.showCount(komako.guessCode.length, counter);
                 if (komako.guessCode.length === size) {
                     resolve(komako.guessCode);
                 }
@@ -145,7 +151,6 @@ komako.checkAnswer = (result) => {
     komako.score = 0;
     let konami = 0;
     let rightWrong;
-    const yourCode = $("#yourCode");
     for (let i = 0; i < result.length; i++) {
         for (let j = 0; j < komako.buttons.length; j++) {
             if (result[i] === komako.buttons[j].letter) {
@@ -161,9 +166,9 @@ komako.checkAnswer = (result) => {
         if (result[i] === komako.konami[i]) konami++;
         $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
     }
-    $("#matchCode").show();
-    $("#counterText ").hide();
-    if (konami === 10) {
+    matchCode.show();
+    counterText.hide();
+    if (konami === komako.konami.length) {
         komako.score = "1,000,000";
         yourCode.children().addClass("konami");
     }
@@ -180,19 +185,20 @@ komako.userEnterCode = (size, keysOrBtns) => {
             komako.checkAnswer(guessCode);
         });
 }
+
 komako.newGameSetup = () => {
     $("#total").hide();
     $("#again").hide();
-    $("#counter").text(0);
-    $("#counterText").hide();
-    $("#modalCounter").hide();
+    counter.text(0);
+    counterText.hide();
+    modalCounter.hide();
 }
 
 komako.restartGame = (size, keysOrBtns) => {
     $("#playAgain").on("click", e => {
         komako.newGameSetup();
-        $("#matchCode").empty();
-        $("#yourCode").empty();
+        matchCode.empty();
+        yourCode.empty();
         komako.generate(size, keysOrBtns);
     })
 }
@@ -203,7 +209,7 @@ komako.mobileDesktop = () => {
         $("table").hide();
         $(".refLetter").hide();
         $("img").removeClass("hide");
-        $(".controllerButton").removeClass("hide");
+        controllerBtn.removeClass("hide");
         return komako.mobileInput;
     } else {
         return komako.desktopInput;
