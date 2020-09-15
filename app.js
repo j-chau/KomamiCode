@@ -87,7 +87,7 @@ komako.countdown = (time, location) => {
     }, 1000);
 }
 
-komako.generate = (size) => {
+komako.generate = (size, keysOrBtns) => {
     komako.generateCode = []
     for (let i = 0; i < size; i++) {
         let random = komako.random(komako.buttons.length);
@@ -103,7 +103,7 @@ komako.generate = (size) => {
         modalCounter.hide();
         $("#matchCode").hide();
         $("#counterText").show();
-        komako.userEnterCode(size);
+        komako.userEnterCode(size, keysOrBtns);
     }, time * 1000);
 
 }
@@ -142,10 +142,6 @@ komako.mobileInput = (size) => {
 
 komako.checkAnswer = (result) => {
     komako.score = 0;
-
-    console.log(komako.generateCode);
-    console.log(result);
-
     let rightWrong;
     const yourCode = $("#yourCode");
     for (let i = 0; i < result.length; i++) {
@@ -168,61 +164,57 @@ komako.checkAnswer = (result) => {
     $("#again").show();
 }
 
-komako.userEnterCode = (size) => {
-    let waitFor;
+komako.userEnterCode = (size, keysOrBtns) => {
     komako.guessCode = [];
-    if (komako.touchEnabled()) {
-        waitFor = komako.mobileInput;
-
-        console.log("mobile view");
-    } else {
-        waitFor = komako.desktopInput;
-
-        console.log("desktop view");
-    }
-    console.log("waiting");
-    $.when(waitFor(size))
+    $.when(keysOrBtns(size))
         .then((guessCode) => {
-            console.log("done");
             $(document).off("keypress");
             $(".controllerButton").off("click");
             komako.checkAnswer(guessCode);
         });
 }
-komako.restartGame = (size) => {
+komako.newGameSetup = () => {
+    $("#total").hide();
+    $("#again").hide();
+    $("#counter").text(0);
+    $("#counterText").hide();
+    $("#modalCounter").hide();
+}
+
+komako.restartGame = (size, keysOrBtns) => {
     $("#playAgain").on("click", e => {
+        komako.newGameSetup();
         $("#matchCode").empty();
         $("#yourCode").empty();
-        $("#total").hide();
-        $("#again").hide();
-        $("#counter").text(0);
-        komako.generate(size);
+        komako.generate(size, keysOrBtns);
     })
 }
 
-komako.init = (codeLength) => {
-    console.log("run ");
-    $("#total").hide();
-    $("#again").hide();
-    $("#counterText").hide();
-    $("#modalCounter").hide();
+komako.mobileDesktop = () => {
     if (komako.touchEnabled()) {
         $("#userEnterMode").text("controller");
         $("table").hide();
         $(".refLetter").hide();
         $("img").removeClass("hide");
         $(".controllerButton").removeClass("hide");
+        return komako.mobileInput;
+    } else {
+        return komako.desktopInput;
     }
+}
+
+komako.init = (codeLength) => {
+    komako.newGameSetup();
+    const inputMethod = komako.mobileDesktop();
     $("#start").on("click", (e) => {
-        console.log("ready");
         e.preventDefault();
         $("body").css("overflow", "auto");
         $(".modal").hide();
         $(".modalOverlay").hide();
         $("#refreshBtn").removeAttr("tabindex", "aria-hidden");
-        komako.generate(codeLength);
+        komako.generate(codeLength, inputMethod);
     });
-    komako.restartGame(codeLength);
+    komako.restartGame(codeLength, inputMethod);
 }
 
 $(function () {
