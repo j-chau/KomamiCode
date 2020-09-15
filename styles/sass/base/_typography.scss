@@ -26,9 +26,11 @@ h2 {
     transform: scaleX(100%);
     font-size: 1.4em;
     padding: 0.8em 0 0.5em;
+    p {
+        padding-bottom: 0.2em;
+    }
     span {
         font-size: 0.5em;
-        line-height: 4;
     }
 }
 table {

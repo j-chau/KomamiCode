@@ -53,3 +53,9 @@ button:focus::before {
     position: fixed;
     bottom: 5%; 
 }
+@media (max-width: 1024px) {
+    .restart {
+        position: static;
+        bottom: unset;
+    }
+}

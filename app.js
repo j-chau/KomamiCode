@@ -9,6 +9,7 @@ const komako = {};
 // x event listener on modal to continue
 // - display countdown timer (time = 3s):
 //     .setTimeout(t) => if t === 0, return; else time--;
+//   ***** REMOVED FROM APP BECAUSE WAS NOT UX/UI FRIENDLY *****
 // x generating "cheat code":
 //     x const empty array for generated code
 //     x for each i in array of length 10, generate random integer between 0 and 7
@@ -29,22 +30,22 @@ komako.buttons = [
     {
         letter: "W",
         keyNumbers: 119,
-        arrows: `<i class="fas fa-arrow-up"></i>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-up"></i><span class="sr-only">up</span>`
     },
     {
         letter: "A",
         keyNumbers: 97,
-        arrows: `<i class="fas fa-arrow-left"></i>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-left"></i><span class="sr-only">left</span>`
     },
     {
         letter: "S",
         keyNumbers: 115,
-        arrows: `<i class="fas fa-arrow-down"></i>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-down"></i><span class="sr-only">down</span>`
     },
     {
         letter: "D",
         keyNumbers: 100,
-        arrows: `<i class="fas fa-arrow-right"></i>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-right"></i><span class="sr-only">right</span>`
     },
     {
         letter: "K",
@@ -58,17 +59,23 @@ komako.buttons = [
     }
 ];
 
+
+komako.random = (num) => rng = Math.floor(Math.random() * num);
+
+komako.showCount = (count, location) => $("#" + location).text(count);
+
+komako.touchEnabled = () => {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0);
+}
+
 komako.displayArrows = (array) => {
     array.forEach((el) => {
         let arrowSymb = el.arrows;
         $("#matchCode").append(`<li>${arrowSymb}</li>`);
     });
 }
-
-// wasd => number of available buttons
-komako.random = (wasd) => rng = Math.floor(Math.random() * wasd);
-
-komako.showCount = (count, location) => $("#" + location).text(count);
 
 komako.countdown = (time, location) => {
     $("#" + location).text(time);
@@ -101,7 +108,6 @@ komako.generate = (size) => {
 
 }
 
-komako.guessCode = [];
 komako.desktopInput = (size) => {
     return new Promise((resolve) => {
         $(document).on("keypress", (e) => {
@@ -134,8 +140,8 @@ komako.mobileInput = (size) => {
     }); // end of promise
 }
 
-komako.score = 0;
 komako.checkAnswer = (result) => {
+    komako.score = 0;
 
     console.log(komako.generateCode);
     console.log(result);
@@ -164,7 +170,8 @@ komako.checkAnswer = (result) => {
 
 komako.userEnterCode = (size) => {
     let waitFor;
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    komako.guessCode = [];
+    if (komako.touchEnabled()) {
         waitFor = komako.mobileInput;
 
         console.log("mobile view");
@@ -189,7 +196,6 @@ komako.restartGame = (size) => {
         $("#total").hide();
         $("#again").hide();
         $("#counter").text(0);
-        komako.guessCode = [];
         komako.generate(size);
     })
 }
@@ -200,7 +206,7 @@ komako.init = (codeLength) => {
     $("#again").hide();
     $("#counterText").hide();
     $("#modalCounter").hide();
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    if (komako.touchEnabled()) {
         $("#userEnterMode").text("controller");
         $("table").hide();
         $(".refLetter").hide();
@@ -216,9 +222,6 @@ komako.init = (codeLength) => {
         komako.generate(codeLength);
     });
     komako.restartGame(codeLength);
-
-    // komako.guessCode = ["K", "D", "A", "W", "S", "D", "L", "L", "S", "L"];
-    // komako.checkAnswer(komako.guessCode);
 }
 
 $(function () {

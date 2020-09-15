@@ -237,9 +237,12 @@ h2 {
   padding: 0.8em 0 0.5em;
 }
 
+.countUp p {
+  padding-bottom: 0.2em;
+}
+
 .countUp span {
   font-size: 0.5em;
-  line-height: 4;
 }
 
 table {
@@ -308,6 +311,13 @@ button:focus::before {
 .restart {
   position: fixed;
   bottom: 5%;
+}
+
+@media (max-width: 1024px) {
+  .restart {
+    position: static;
+    bottom: unset;
+  }
 }
 
 .code {
@@ -387,6 +397,7 @@ i {
   height: auto;
   max-height: 90%;
   padding: 2em 1em;
+  overflow: auto;
   text-align: center;
   background-color: #3D3D3D;
   z-index: 10;
@@ -406,7 +417,6 @@ i {
   height: 100%;
   width: 100%;
   padding: 0.5em;
-  overflow: auto;
   text-align: left;
 }
 
@@ -462,10 +472,17 @@ main {
 
 svg, section {
   width: 100%;
+  height: auto;
 }
 
-svg {
-  position: fixed;
-  bottom: 10%;
-  max-width: 96%;
+.svgContainer {
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+@media (max-width: 1024px) {
+  .svgContainer {
+    position: static;
+    width: 96%;
+  }
 }

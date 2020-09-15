@@ -13,9 +13,18 @@ main {
 }
 svg, section {
     width: 100%;
+    height: auto;
 }
-svg {
-    position: fixed;
-    bottom: 10%;
-    max-width: 96%;
+.svgContainer {
+    // position: fixed;
+    // bottom: 10%;
+    max-width: 700px;
+    margin: 20px auto;
+}
+@media (max-width: 1024px) {
+    .svgContainer {
+        position: static;
+        width: 96%;
+        // bottom: unset;
+    }
 }
