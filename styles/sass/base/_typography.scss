@@ -4,6 +4,9 @@ body {
     font-size: 2rem;
     color: $iconColor;
 }
+@media (max-width: 768px) {
+    body { font-size: 1.6em; }
+}
 h1, h2, button,
 .countUp, .again {
     font-family: 'Press Start 2P', cursive;

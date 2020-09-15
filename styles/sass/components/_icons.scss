@@ -4,6 +4,9 @@
     width: 80%;
     margin: 1em auto;
 }
+@media (max-width: 420px) {
+    .code { width: 94%; }
+}
 li {
     font-size: 1.55em;
     color: $iconColor;
