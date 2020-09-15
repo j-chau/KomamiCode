@@ -40,3 +40,9 @@ i {
         border-color: $iconRight;
     }
 }
+.konami {
+    animation: rainbow 2s step-end infinite;
+    .ABbutton::after {
+        animation: rainbowBorder 2s step-end infinite;
+    }
+}

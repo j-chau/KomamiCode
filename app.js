@@ -30,22 +30,22 @@ komako.buttons = [
     {
         letter: "W",
         keyNumbers: 119,
-        arrows: `<i aria-hidden="true" class="fas fa-arrow-up"></i><span class="sr-only">up</span>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-up"></i><span class="srOnly">up</span>`
     },
     {
         letter: "A",
         keyNumbers: 97,
-        arrows: `<i aria-hidden="true" class="fas fa-arrow-left"></i><span class="sr-only">left</span>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-left"></i><span class="srOnly">left</span>`
     },
     {
         letter: "S",
         keyNumbers: 115,
-        arrows: `<i aria-hidden="true" class="fas fa-arrow-down"></i><span class="sr-only">down</span>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-down"></i><span class="srOnly">down</span>`
     },
     {
         letter: "D",
         keyNumbers: 100,
-        arrows: `<i aria-hidden="true" class="fas fa-arrow-right"></i><span class="sr-only">right</span>`
+        arrows: `<i aria-hidden="true" class="fas fa-arrow-right"></i><span class="srOnly">right</span>`
     },
     {
         letter: "K",
@@ -59,6 +59,7 @@ komako.buttons = [
     }
 ];
 
+komako.konami = ["W", "W", "S", "S", "A", "D", "A", "D", "K", "L"];
 
 komako.random = (num) => rng = Math.floor(Math.random() * num);
 
@@ -142,6 +143,7 @@ komako.mobileInput = (size) => {
 
 komako.checkAnswer = (result) => {
     komako.score = 0;
+    let konami = 0;
     let rightWrong;
     const yourCode = $("#yourCode");
     for (let i = 0; i < result.length; i++) {
@@ -156,10 +158,15 @@ komako.checkAnswer = (result) => {
             rightWrong = "right";
             komako.score += 1;
         } else rightWrong = "wrong";
+        if (result[i] === komako.konami[i]) konami++;
         $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
     }
     $("#matchCode").show();
     $("#counterText ").hide();
+    if (konami === 10) {
+        komako.score = "1,000,000";
+        yourCode.children().addClass("konami");
+    }
     $("#total").text(`${komako.score}/10`).show();
     $("#again").show();
 }
@@ -203,7 +210,8 @@ komako.mobileDesktop = () => {
     }
 }
 
-komako.init = (codeLength) => {
+komako.init = () => {
+    const codeLength = 10;
     komako.newGameSetup();
     const inputMethod = komako.mobileDesktop();
     $("#start").on("click", (e) => {
@@ -218,5 +226,5 @@ komako.init = (codeLength) => {
 }
 
 $(function () {
-    komako.init(10);
+    komako.init();
 }); // end of document ready
