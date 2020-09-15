@@ -50,12 +50,5 @@ button:focus::before {
     top: 17%;
 }
 .restart {
-    position: fixed;
-    bottom: 5%; 
-}
-@media (max-width: 1024px) {
-    .restart {
-        position: static;
-        bottom: unset;
-    }
+    text-align: center;
 }

@@ -3,6 +3,7 @@ body {
     max-width: 1024px;
     margin: 0 auto;
     background-color: $bgColor;
+    overflow: hidden;
 }
 main {
     display: flex;
@@ -10,21 +11,14 @@ main {
     justify-content: space-between;
     align-items: center;
     height: 40vh;
+    min-height: 320px;
 }
 svg, section {
     width: 100%;
     height: auto;
 }
 .svgContainer {
-    // position: fixed;
-    // bottom: 10%;
+    width: 96%;
     max-width: 700px;
     margin: 20px auto;
-}
-@media (max-width: 1024px) {
-    .svgContainer {
-        position: static;
-        width: 96%;
-        // bottom: unset;
-    }
 }

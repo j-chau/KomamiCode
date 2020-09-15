@@ -216,6 +216,7 @@ komako.init = (codeLength) => {
     $("#start").on("click", (e) => {
         console.log("ready");
         e.preventDefault();
+        $("body").css("overflow", "auto");
         $(".modal").hide();
         $(".modalOverlay").hide();
         $("#refreshBtn").removeAttr("tabindex", "aria-hidden");

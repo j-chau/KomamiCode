@@ -309,15 +309,7 @@ button:focus::before {
 }
 
 .restart {
-  position: fixed;
-  bottom: 5%;
-}
-
-@media (max-width: 1024px) {
-  .restart {
-    position: static;
-    bottom: unset;
-  }
+  text-align: center;
 }
 
 .code {
@@ -385,8 +377,7 @@ i {
   z-index: 5;
 }
 
-.modal,
-.readyModal {
+.modal {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -403,14 +394,16 @@ i {
   z-index: 10;
 }
 
-.modal img,
-.readyModal img {
+.modal img {
   width: 100%;
 }
 
-.readyModal {
-  top: 30%;
+.timeCounter {
+  margin: 0 auto;
   width: 300px;
+  padding: 1em 0;
+  margin-top: 1.8em;
+  background-color: #3D3D3D;
 }
 
 .modalContent {
@@ -451,6 +444,7 @@ body {
   max-width: 1024px;
   margin: 0 auto;
   background-color: #111;
+  overflow: hidden;
 }
 
 main {
@@ -468,6 +462,7 @@ main {
       -ms-flex-align: center;
           align-items: center;
   height: 40vh;
+  min-height: 320px;
 }
 
 svg, section {
@@ -476,13 +471,7 @@ svg, section {
 }
 
 .svgContainer {
+  width: 96%;
   max-width: 700px;
   margin: 20px auto;
-}
-
-@media (max-width: 1024px) {
-  .svgContainer {
-    position: static;
-    width: 96%;
-  }
 }
