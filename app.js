@@ -1,31 +1,5 @@
 const komako = {};
 
-// PSEUDO CODE
-// x global variables:
-//     x const button array = [W,A,S,D,P,L,B,N] for generating code
-//     x const conversion object to convert e.which to corresponding letter on keyboard
-//         - ex. object = { 87: "W" }
-// x modal appears first when document ready
-// x event listener on modal to continue
-// - display countdown timer (time = 3s):
-//     .setTimeout(t) => if t === 0, return; else time--;
-//   ***** REMOVED FROM APP BECAUSE WAS NOT UX/UI FRIENDLY *****
-// x generating "cheat code":
-//     x const empty array for generated code
-//     x for each i in array of length 10, generate random integer between 0 and 7
-//     x display each integer as its corresponding index in button array
-// x display countdown timer (time = 5s)
-// x hide cheat code
-// x event listener for keypresses:
-//     x const empty array for user's answers
-//     x for each keypress, convert e.which to letter on keyboard
-//     x push value to answer array
-//     x display number of keypresses (array indices + 1); ends at 10
-// x compare cheat code array at [i] to answer array at [i]:
-//     x for each i in answer array, if !== to cheat code array; score += 1;
-// x display score out of 10
-// x show button with event listener to play again (same trigger as modal button)
-
 const yourCode = $("#yourCode");
 const matchCode = $("#matchCode");
 const modalCounter = $("#modalCounter");
@@ -86,7 +60,7 @@ komako.displayArrows = (array) => {
 }
 
 komako.countdown = (time, location) => {
-    location.text(time);
+    komako.showCount(time, location);
     time--;
     timer = window.setInterval(() => {
         komako.showCount(time, location);
@@ -95,6 +69,7 @@ komako.countdown = (time, location) => {
     }, 1000);
 }
 
+// start game
 komako.generate = (size, keysOrBtns) => {
     komako.generateCode = []
     for (let i = 0; i < size; i++) {
@@ -103,6 +78,7 @@ komako.generate = (size, keysOrBtns) => {
     }
     komako.displayArrows(komako.generateCode);
 
+    // FUTURE: let user choose timer length by selecting difficulty (5 or 10 sec)
     const time = 5;
     modalCounter.show();
     komako.countdown(time, modalCounter);
@@ -114,6 +90,7 @@ komako.generate = (size, keysOrBtns) => {
     }, time * 1000);
 }
 
+// keyboard users to use WASD to enter code
 komako.desktopInput = (size) => {
     return new Promise((resolve) => {
         $(document).on("keypress", (e) => {
@@ -133,6 +110,7 @@ komako.desktopInput = (size) => {
     }); // end of promise
 }
 
+// touchscreen users to use "clicks" to enter code
 komako.mobileInput = (size) => {
     return new Promise((resolve) => {
         controllerBtn.on("click", function () {
@@ -150,8 +128,9 @@ komako.mobileInput = (size) => {
 komako.checkAnswer = (result) => {
     komako.score = 0;
     let konami = 0;
-    let rightWrong;
+    let rightOrWrong;
     for (let i = 0; i < result.length; i++) {
+        // display user entered code
         for (let j = 0; j < komako.buttons.length; j++) {
             if (result[i] === komako.buttons[j].letter) {
                 const arrow = komako.buttons[j].arrows;
@@ -159,13 +138,15 @@ komako.checkAnswer = (result) => {
                 break;
             }
         }
+        // check if user code matches generated code
         if (result[i] === komako.generateCode[i].letter) {
-            rightWrong = "right";
+            rightOrWrong = "right";
             komako.score += 1;
-        } else rightWrong = "wrong";
+        } else rightOrWrong = "wrong";
         if (result[i] === komako.konami[i]) konami++;
-        $(`#yourCode li:nth-child(${i + 1})`).addClass(rightWrong);
+        $(`#yourCode li:nth-child(${i + 1})`).addClass(rightOrWrong);
     }
+    // display score out of 10
     matchCode.show();
     counterText.hide();
     if (konami === komako.konami.length) {
@@ -176,6 +157,7 @@ komako.checkAnswer = (result) => {
     $("#again").show();
 }
 
+// wait for user input size === generated code size
 komako.userEnterCode = (size, keysOrBtns) => {
     komako.guessCode = [];
     $.when(keysOrBtns(size))
@@ -195,7 +177,7 @@ komako.newGameSetup = () => {
 }
 
 komako.restartGame = (size, keysOrBtns) => {
-    $("#playAgain").on("click", e => {
+    $("#playAgain").on("click", () => {
         komako.newGameSetup();
         matchCode.empty();
         yourCode.empty();
@@ -203,7 +185,7 @@ komako.restartGame = (size, keysOrBtns) => {
     })
 }
 
-komako.mobileDesktop = () => {
+komako.mobileOrDesktop = () => {
     if (komako.touchEnabled()) {
         $("#userEnterMode").text("controller");
         $("table").hide();
@@ -219,7 +201,7 @@ komako.mobileDesktop = () => {
 komako.init = () => {
     const codeLength = 10;
     komako.newGameSetup();
-    const inputMethod = komako.mobileDesktop();
+    const inputMethod = komako.mobileOrDesktop();
     $("#start").on("click", (e) => {
         e.preventDefault();
         $("body").css("overflow", "auto");
